@@ -2,6 +2,7 @@ plugins {
     application
     id("se.patrikerdes.use-latest-versions") version "0.2.19"
     id("io.github.ben-manes.versions") version "0.61.0"
+    id("com.diffplug.spotless") version "8.10.3"
 }
 
 application {
@@ -26,6 +27,16 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+spotless {
+    java {
+        importOrder()
+        removeUnusedImports()
+        googleJavaFormat().aosp()
+        formatAnnotations()
+        leadingTabsToSpaces(4)
+    }
 }
 
 tasks.getByName<JavaExec>("run") {
