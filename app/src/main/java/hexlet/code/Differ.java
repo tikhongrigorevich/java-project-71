@@ -1,12 +1,10 @@
 package hexlet.code;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.util.*;
 
 public class Differ {
@@ -54,7 +52,6 @@ public class Differ {
         }
 
         result.append("}");
-
 
         return result.toString();
     }
