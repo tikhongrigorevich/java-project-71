@@ -1,4 +1,7 @@
-.PHONY: build-dist run-dist clean lint lint-fix
+.PHONY: build build-dist run-dist clean lint lint-fix test
+
+build:
+	./gradlew clean build
 
 build-dist:
 	./gradlew clean installDist
@@ -14,3 +17,6 @@ lint:
 
 lint-fix:
 	./gradlew spotlessApply
+
+test:
+	./gradlew test

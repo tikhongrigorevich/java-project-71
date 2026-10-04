@@ -3,6 +3,7 @@ plugins {
     id("se.patrikerdes.use-latest-versions") version "0.2.19"
     id("io.github.ben-manes.versions") version "0.61.0"
     id("com.diffplug.spotless") version "8.10.3"
+    jacoco
 }
 
 application {
@@ -25,8 +26,8 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-tasks.test {
-    useJUnitPlatform()
+tasks.getByName<JavaExec>("run") {
+    standardInput = System.`in`
 }
 
 spotless {
@@ -39,6 +40,40 @@ spotless {
     }
 }
 
-tasks.getByName<JavaExec>("run") {
-    standardInput = System.`in`
+val coverageExcludes = listOf("io/hexlet/App.class")
+
+fun JacocoReportBase.excludeEntryPoint() {
+    classDirectories.setFrom(
+        files(classDirectories.files.map { fileTree(it) { exclude(coverageExcludes) } }),
+    )
 }
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    excludeEntryPoint()
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+}
+
+tasks.test {
+    useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestCoverageVerification {
+    dependsOn(tasks.jacocoTestReport)
+    excludeEntryPoint()
+    violationRules {
+        rule {
+            limit {
+                counter = "INSTRUCTION"
+                value = "COVEREDRATIO"
+                minimum = "0.80".toBigDecimal()
+            }
+        }
+    }
+}
+
+tasks.check { dependsOn(tasks.jacocoTestCoverageVerification) }
