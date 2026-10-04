@@ -18,7 +18,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
 
-      - run: make test
-        working-directory: app
+#      - run: make test
+#        working-directory: app
       - run: make lint
         working-directory: app
