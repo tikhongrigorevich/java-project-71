@@ -40,3 +40,6 @@ cd java-project-71
 
 Difference between two files, asciinema:
 [![asciicast](https://asciinema.org/a/b4CnyAzmlapu2nsG.svg)](https://asciinema.org/a/b4CnyAzmlapu2nsG)
+
+Difference between two files with Stylish, asciinema:
+[![asciicast](https://asciinema.org/a/glgmMQJb8wQFDfhn.svg)](https://asciinema.org/a/glgmMQJb8wQFDfhn)
