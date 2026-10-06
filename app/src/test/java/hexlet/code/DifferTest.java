@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 class DifferTest {
     @Test
-    public void json1Test() throws Exception {
+    public void jsonTest() throws Exception {
         Path resultPath = Paths.get("src/test/resources/fixtures/result.txt").toAbsolutePath();
         String expected = Files.readString(resultPath).trim();
 
@@ -70,7 +70,7 @@ class DifferTest {
                         .toAbsolutePath()
                         .toString();
 
-        String actual = Differ.generate(path1, path2).trim();
+        String actual = Differ.generate(path1, path2, "plain").trim();
         assertEquals(actual, expected);
     }
 }

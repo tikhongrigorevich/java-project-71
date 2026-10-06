@@ -13,7 +13,7 @@ public class Plain {
             Object key = node.get("key");
             Object oldValue = node.get("oldValue");
             Object newValue = node.get("newValue");
-            String propertyKey = "propertyKey " + "'" + key + "'";
+            String propertyKey = "Property " + "'" + key + "'";
 
             switch (type) {
                 case "deleted" -> result.append(propertyKey).append(" was removed").append("\n");
