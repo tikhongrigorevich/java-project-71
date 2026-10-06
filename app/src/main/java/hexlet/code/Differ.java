@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class Differ {
-    public static String generate(String filePath1, String filePath2) throws Exception {
+    public static String generate(String filePath1, String filePath2, String format) throws Exception {
         Path path1 = Paths.get(filePath1).toAbsolutePath().normalize();
         Path path2 = Paths.get(filePath2).toAbsolutePath().normalize();
 
@@ -20,7 +20,7 @@ public class Differ {
         List<String> sortedKeys = new ArrayList<>(allKeys);
         Collections.sort(sortedKeys);
 
-        StringBuilder result = new StringBuilder("{\n");
+        List<Map<String, Object>> diffTree = new ArrayList<>();
 
         for (var key : sortedKeys) {
             boolean isMap1 = contentMap1.containsKey(key);
@@ -28,21 +28,32 @@ public class Differ {
             Object value1 = contentMap1.get(key);
             Object value2 = contentMap2.get(key);
 
+            Map<String, Object> node = new LinkedHashMap<>();
+            node.put("key", key);
+
             if (isMap1 && !isMap2) {
-                result.append("  - ").append(key).append(": ").append(value1).append("\n");
+                node.put("type", "deleted");
+                node.put("oldValue", value1);
             } else if (!isMap1 && isMap2) {
-                result.append("  + ").append(key).append(": ").append(value2).append("\n");
+                node.put("type", "added");
+                node.put("newValue", value2);
             } else if (Objects.equals(value1, value2)) {
-                result.append("    ").append(key).append(": ").append(value1).append("\n");
+                node.put("type", "unchanged");
+                node.put("oldValue", value1);
             } else {
-                result.append("  - ").append(key).append(": ").append(value1).append("\n");
-                result.append("  + ").append(key).append(": ").append(value2).append("\n");
+                node.put("type", "changed");
+                node.put("oldValue", value1);
+                node.put("newValue", value2);
             }
+
+            diffTree.add(node);
         }
 
-        result.append("}");
+        return Stylish.stylish(diffTree, format);
+    }
 
-        return result.toString();
+    public static String generate(String filePath1, String filePath2) throws Exception {
+        return Differ.generate(filePath1, filePath2, "stylish");
     }
 
     private static String getFormat(String filePath) {
