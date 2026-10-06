@@ -20,14 +20,34 @@ public class Stylish {
 
             switch (type) {
                 case "deleted" ->
-                    result.append(minus).append(key).append(colon).append(node.get(oldValue)).append("\n");
+                        result.append(minus)
+                                .append(key)
+                                .append(colon)
+                                .append(node.get(oldValue))
+                                .append("\n");
                 case "added" ->
-                    result.append(plus).append(key).append(colon).append(node.get(newValue)).append("\n");
+                        result.append(plus)
+                                .append(key)
+                                .append(colon)
+                                .append(node.get(newValue))
+                                .append("\n");
                 case "unchanged" ->
-                    result.append(space).append(key).append(colon).append(node.get(oldValue)).append("\n");
+                        result.append(space)
+                                .append(key)
+                                .append(colon)
+                                .append(node.get(oldValue))
+                                .append("\n");
                 case "changed" -> {
-                    result.append(minus).append(key).append(colon).append(node.get(oldValue)).append("\n");
-                    result.append(plus).append(key).append(colon).append(node.get(newValue)).append("\n");
+                    result.append(minus)
+                            .append(key)
+                            .append(colon)
+                            .append(node.get(oldValue))
+                            .append("\n");
+                    result.append(plus)
+                            .append(key)
+                            .append(colon)
+                            .append(node.get(newValue))
+                            .append("\n");
                 }
             }
         }
