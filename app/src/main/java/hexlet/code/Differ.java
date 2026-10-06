@@ -39,10 +39,10 @@ public class Differ {
                 node.put("type", "added");
                 node.put("newValue", value2);
             } else if (Objects.equals(value1, value2)) {
-                node.put("type", "unchanged");
+                node.put("type", "notUpdate");
                 node.put("oldValue", value1);
             } else {
-                node.put("type", "changed");
+                node.put("type", "update");
                 node.put("oldValue", value1);
                 node.put("newValue", value2);
             }
@@ -50,7 +50,7 @@ public class Differ {
             diffTree.add(node);
         }
 
-        return Stylish.stylish(diffTree, format);
+        return Formatter.formatter(diffTree, format);
     }
 
     public static String generate(String filePath1, String filePath2) throws Exception {

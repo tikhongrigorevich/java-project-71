@@ -1,4 +1,4 @@
-package hexlet.code;
+package hexlet.code.formatters;
 
 import java.util.List;
 import java.util.Map;
@@ -31,13 +31,13 @@ public class Stylish {
                                 .append(colon)
                                 .append(node.get(newValue))
                                 .append("\n");
-                case "unchanged" ->
+                case "notUpdate" ->
                         result.append(space)
                                 .append(key)
                                 .append(colon)
                                 .append(node.get(oldValue))
                                 .append("\n");
-                case "changed" -> {
+                case "update" -> {
                     result.append(minus)
                             .append(key)
                             .append(colon)
