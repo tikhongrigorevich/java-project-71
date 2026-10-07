@@ -9,8 +9,9 @@ import org.junit.jupiter.api.Test;
 
 class DifferTest {
     @Test
-    public void jsonTest() throws Exception {
-        Path resultPath = Paths.get("src/test/resources/fixtures/result.txt").toAbsolutePath();
+    public void stylishTestBetweenFile1And2() throws Exception {
+        Path resultPath =
+                Paths.get("src/test/resources/fixtures/stylish_diff_1_2.txt").toAbsolutePath();
         String expected = Files.readString(resultPath).trim();
 
         String path1 =
@@ -23,8 +24,9 @@ class DifferTest {
     }
 
     @Test
-    public void ymlTest() throws Exception {
-        Path resultPath = Paths.get("src/test/resources/fixtures/result.txt").toAbsolutePath();
+    public void ymlTestBetweenFile1And2() throws Exception {
+        Path resultPath =
+                Paths.get("src/test/resources/fixtures/stylish_diff_1_2.txt").toAbsolutePath();
         String expected = Files.readString(resultPath).trim();
 
         String path1 =
@@ -37,56 +39,45 @@ class DifferTest {
     }
 
     @Test
-    public void stylishTest() throws Exception {
+    public void stylishTestBetweenFile3And4() throws Exception {
         Path resultPath =
-                Paths.get("src/test/resources/fixtures/stylish_result.txt").toAbsolutePath();
+                Paths.get("src/test/resources/fixtures/stylish_diff_3_4.txt").toAbsolutePath();
         String expected = Files.readString(resultPath).trim();
 
         String path1 =
-                Paths.get("src/test/resources/fixtures/fileStylish1.json")
-                        .toAbsolutePath()
-                        .toString();
+                Paths.get("src/test/resources/fixtures/file3.json").toAbsolutePath().toString();
         String path2 =
-                Paths.get("src/test/resources/fixtures/fileStylish2.json")
-                        .toAbsolutePath()
-                        .toString();
+                Paths.get("src/test/resources/fixtures/file4.json").toAbsolutePath().toString();
 
         String actual = Differ.generate(path1, path2).trim();
         assertEquals(actual, expected);
     }
 
     @Test
-    public void plainTest() throws Exception {
+    public void plainTestBetweenFile3And4() throws Exception {
         Path resultPath =
-                Paths.get("src/test/resources/fixtures/plain_result.txt").toAbsolutePath();
+                Paths.get("src/test/resources/fixtures/plain_diff_3_4.txt").toAbsolutePath();
         String expected = Files.readString(resultPath).trim();
 
         String path1 =
-                Paths.get("src/test/resources/fixtures/fileStylish1.json")
-                        .toAbsolutePath()
-                        .toString();
+                Paths.get("src/test/resources/fixtures/file3.json").toAbsolutePath().toString();
         String path2 =
-                Paths.get("src/test/resources/fixtures/fileStylish2.json")
-                        .toAbsolutePath()
-                        .toString();
+                Paths.get("src/test/resources/fixtures/file4.json").toAbsolutePath().toString();
 
         String actual = Differ.generate(path1, path2, "plain").trim();
         assertEquals(actual, expected);
     }
 
     @Test
-    public void json2Test() throws Exception {
-        Path resultPath = Paths.get("src/test/resources/fixtures/json_result.txt").toAbsolutePath();
+    public void jsonTestBetweenFile3And4() throws Exception {
+        Path resultPath =
+                Paths.get("src/test/resources/fixtures/json_diff_3_4.txt").toAbsolutePath();
         String expected = Files.readString(resultPath).trim();
 
         String path1 =
-                Paths.get("src/test/resources/fixtures/fileStylish1.json")
-                        .toAbsolutePath()
-                        .toString();
+                Paths.get("src/test/resources/fixtures/file3.json").toAbsolutePath().toString();
         String path2 =
-                Paths.get("src/test/resources/fixtures/fileStylish2.json")
-                        .toAbsolutePath()
-                        .toString();
+                Paths.get("src/test/resources/fixtures/file4.json").toAbsolutePath().toString();
 
         String actual = Differ.generate(path1, path2, "json").trim();
         assertEquals(actual, expected);

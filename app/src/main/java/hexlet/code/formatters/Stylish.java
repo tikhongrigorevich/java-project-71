@@ -56,8 +56,4 @@ public class Stylish {
 
         return result.toString();
     }
-
-    public static String stylish(List<Map<String, Object>> diffTree, String format) {
-        return Stylish.stylish(diffTree);
-    }
 }
