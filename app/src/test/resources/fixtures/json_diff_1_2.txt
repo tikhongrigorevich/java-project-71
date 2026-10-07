@@ -13,8 +13,8 @@
 }, {
   "key" : "timeout",
   "status" : "update",
-  "oldValue" : "50",
-  "newValue" : "20"
+  "oldValue" : 50,
+  "newValue" : 20
 }, {
   "key" : "verbose",
   "status" : "added",
