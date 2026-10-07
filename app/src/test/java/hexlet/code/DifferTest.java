@@ -1,85 +1,59 @@
 package hexlet.code;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.junit.jupiter.api.Test;
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class DifferTest {
-    @Test
-    public void stylishTestBetweenFile1And2() throws Exception {
-        Path resultPath =
-                Paths.get("src/test/resources/fixtures/stylish_diff_1_2.txt").toAbsolutePath();
-        String expected = Files.readString(resultPath).trim();
+    private static String readFixtures(String fileName) throws Exception {
+        return Files.readString(Paths.get("src/test/resources/fixtures/", fileName)).trim();
+    }
 
-        String path1 =
-                Paths.get("src/test/resources/fixtures/file1.json").toAbsolutePath().toString();
-        String path2 =
-                Paths.get("src/test/resources/fixtures/file2.json").toAbsolutePath().toString();
+    private static Stream<Arguments> provideDiffTestArgumentsForFiles1And2() {
+        return Stream.of(
+                arguments("json", "stylish", "stylish_diff_1_2.txt"),
+                arguments("yml", "stylish", "stylish_diff_1_2.txt"),
+                arguments("json", "plain", "plain_diff_1_2.txt"),
+                arguments("yml", "plain", "plain_diff_1_2.txt"),
+                arguments("json", "json", "json_diff_1_2.txt"),
+                arguments("yml", "json", "json_diff_1_2.txt"));
+    }
 
-        String actual = Differ.generate(path1, path2).trim();
+    @ParameterizedTest
+    @MethodSource("provideDiffTestArgumentsForFiles1And2")
+    public void diffBetweenFile1And2Test(String extension, String format, String diffResult)
+            throws Exception {
+        String path1 = "src/test/resources/fixtures/file1." + extension;
+        String path2 = "src/test/resources/fixtures/file2." + extension;
+        String expected = readFixtures(diffResult);
+        String actual = Differ.generate(path1, path2, format).trim();
         assertEquals(actual, expected);
     }
 
-    @Test
-    public void ymlTestBetweenFile1And2() throws Exception {
-        Path resultPath =
-                Paths.get("src/test/resources/fixtures/stylish_diff_1_2.txt").toAbsolutePath();
-        String expected = Files.readString(resultPath).trim();
-
-        String path1 =
-                Paths.get("src/test/resources/fixtures/file1.yml").toAbsolutePath().toString();
-        String path2 =
-                Paths.get("src/test/resources/fixtures/file2.yml").toAbsolutePath().toString();
-
-        String actual = Differ.generate(path1, path2).trim();
-        assertEquals(actual, expected);
+    private static Stream<Arguments> provideDiffTestArgumentsForFiles3And4() {
+        return Stream.of(
+                arguments("json", "stylish", "stylish_diff_3_4.txt"),
+                arguments("yml", "stylish", "stylish_diff_3_4.txt"),
+                arguments("json", "plain", "plain_diff_3_4.txt"),
+                arguments("yml", "plain", "plain_diff_3_4.txt"),
+                arguments("json", "json", "json_diff_3_4.txt"),
+                arguments("yml", "json", "json_diff_3_4.txt"));
     }
 
-    @Test
-    public void stylishTestBetweenFile3And4() throws Exception {
-        Path resultPath =
-                Paths.get("src/test/resources/fixtures/stylish_diff_3_4.txt").toAbsolutePath();
-        String expected = Files.readString(resultPath).trim();
-
-        String path1 =
-                Paths.get("src/test/resources/fixtures/file3.json").toAbsolutePath().toString();
-        String path2 =
-                Paths.get("src/test/resources/fixtures/file4.json").toAbsolutePath().toString();
-
-        String actual = Differ.generate(path1, path2).trim();
-        assertEquals(actual, expected);
-    }
-
-    @Test
-    public void plainTestBetweenFile3And4() throws Exception {
-        Path resultPath =
-                Paths.get("src/test/resources/fixtures/plain_diff_3_4.txt").toAbsolutePath();
-        String expected = Files.readString(resultPath).trim();
-
-        String path1 =
-                Paths.get("src/test/resources/fixtures/file3.json").toAbsolutePath().toString();
-        String path2 =
-                Paths.get("src/test/resources/fixtures/file4.json").toAbsolutePath().toString();
-
-        String actual = Differ.generate(path1, path2, "plain").trim();
-        assertEquals(actual, expected);
-    }
-
-    @Test
-    public void jsonTestBetweenFile3And4() throws Exception {
-        Path resultPath =
-                Paths.get("src/test/resources/fixtures/json_diff_3_4.txt").toAbsolutePath();
-        String expected = Files.readString(resultPath).trim();
-
-        String path1 =
-                Paths.get("src/test/resources/fixtures/file3.json").toAbsolutePath().toString();
-        String path2 =
-                Paths.get("src/test/resources/fixtures/file4.json").toAbsolutePath().toString();
-
-        String actual = Differ.generate(path1, path2, "json").trim();
+    @ParameterizedTest
+    @MethodSource("provideDiffTestArgumentsForFiles3And4")
+    public void diffBetweenFile3And4Test(String extension, String format, String diffResult)
+            throws Exception {
+        String path3 = "src/test/resources/fixtures/file3." + extension;
+        String path4 = "src/test/resources/fixtures/file4." + extension;
+        String expected = readFixtures(diffResult);
+        String actual = Differ.generate(path3, path4, format).trim();
         assertEquals(actual, expected);
     }
 }
