@@ -4,8 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
+
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -29,11 +32,11 @@ class DifferTest {
     @MethodSource("provideDiffTestArgumentsForFiles1And2")
     public void diffBetweenFile1And2Test(String extension, String format, String diffResult)
             throws Exception {
-        String path1 = "src/test/resources/fixtures/file1." + extension;
-        String path2 = "src/test/resources/fixtures/file2." + extension;
+        Path path1 = Path.of("src/test/resources/fixtures/file1." + extension);
+        Path path2 = Path.of("src/test/resources/fixtures/file2." + extension);
         String expected = readFixtures(diffResult);
         String actual = Differ.generate(path1, path2, format).trim();
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 
     private static Stream<Arguments> provideDiffTestArgumentsForFiles3And4() {
@@ -50,10 +53,19 @@ class DifferTest {
     @MethodSource("provideDiffTestArgumentsForFiles3And4")
     public void diffBetweenFile3And4Test(String extension, String format, String diffResult)
             throws Exception {
-        String path3 = "src/test/resources/fixtures/file3." + extension;
-        String path4 = "src/test/resources/fixtures/file4." + extension;
+        Path path3 = Path.of("src/test/resources/fixtures/file3." + extension);
+        Path path4 = Path.of("src/test/resources/fixtures/file4." + extension);
         String expected = readFixtures(diffResult);
         String actual = Differ.generate(path3, path4, format).trim();
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void defaultTest() throws Exception {
+        Path path1 = Path.of("src/test/resources/fixtures/file1.json");
+        Path path2 = Path.of("src/test/resources/fixtures/file2.json");
+        String expected = readFixtures("src/test/resources/fixtures/stylish_diff_1_2.txt");
+        String actual = Differ.generate(path1, path2);
+        assertEquals(expected, actual);
     }
 }

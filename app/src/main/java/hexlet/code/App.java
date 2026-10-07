@@ -1,5 +1,6 @@
 package hexlet.code;
 
+import java.nio.file.Path;
 import java.util.concurrent.Callable;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -22,10 +23,10 @@ public class App implements Callable<Integer> {
     private String format;
 
     @Parameters(index = "0", paramLabel = "filepath1", description = "path to first file")
-    private String filepath1;
+    private Path filepath1;
 
     @Parameters(index = "1", paramLabel = "filepath2", description = "path to second file")
-    private String filepath2;
+    private Path filepath2;
 
     @Override
     public Integer call() throws Exception {
