@@ -73,4 +73,22 @@ class DifferTest {
         String actual = Differ.generate(path1, path2, "plain").trim();
         assertEquals(actual, expected);
     }
+
+    @Test
+    public void json2Test() throws Exception {
+        Path resultPath = Paths.get("src/test/resources/fixtures/json_result.txt").toAbsolutePath();
+        String expected = Files.readString(resultPath).trim();
+
+        String path1 =
+                Paths.get("src/test/resources/fixtures/fileStylish1.json")
+                        .toAbsolutePath()
+                        .toString();
+        String path2 =
+                Paths.get("src/test/resources/fixtures/fileStylish2.json")
+                        .toAbsolutePath()
+                        .toString();
+
+        String actual = Differ.generate(path1, path2, "json").trim();
+        assertEquals(actual, expected);
+    }
 }
