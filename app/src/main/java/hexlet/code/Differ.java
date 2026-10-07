@@ -53,10 +53,6 @@ public class Differ {
         return Formatter.formatter(diffTree, format);
     }
 
-    public static String generate(String filePath1, String filePath2) throws Exception {
-        return Differ.generate(filePath1, filePath2, "stylish");
-    }
-
     private static String getFormat(String filePath) {
         int index = filePath.lastIndexOf(".");
 
