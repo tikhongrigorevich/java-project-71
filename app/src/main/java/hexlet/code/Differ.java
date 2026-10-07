@@ -33,16 +33,16 @@ public class Differ {
             node.put("key", key);
 
             if (isMap1 && !isMap2) {
-                node.put("type", "deleted");
+                node.put("status", "deleted");
                 node.put("oldValue", value1);
             } else if (!isMap1 && isMap2) {
-                node.put("type", "added");
+                node.put("status", "added");
                 node.put("newValue", value2);
             } else if (Objects.equals(value1, value2)) {
-                node.put("type", "notUpdate");
+                node.put("status", "notUpdate");
                 node.put("oldValue", value1);
             } else {
-                node.put("type", "update");
+                node.put("status", "update");
                 node.put("oldValue", value1);
                 node.put("newValue", value2);
             }

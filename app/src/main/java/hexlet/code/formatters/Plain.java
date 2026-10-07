@@ -9,13 +9,13 @@ public class Plain {
         StringBuilder result = new StringBuilder();
 
         for (var node : diffTree) {
-            String type = (String) node.get("type");
-            Object key = node.get("key");
+            String status = (String) node.get("status");
+            String key = (String) node.get("key");
             Object oldValue = node.get("oldValue");
             Object newValue = node.get("newValue");
             String propertyKey = "Property " + "'" + key + "'";
 
-            switch (type) {
+            switch (status) {
                 case "deleted" -> result.append(propertyKey).append(" was removed").append("\n");
                 case "added" ->
                         result.append(propertyKey)

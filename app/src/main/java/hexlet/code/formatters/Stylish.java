@@ -15,10 +15,10 @@ public class Stylish {
         StringBuilder result = new StringBuilder("{\n");
 
         for (var node : diffTree) {
-            String type = (String) node.get("type");
+            String status = (String) node.get("status");
             String key = (String) node.get("key");
 
-            switch (type) {
+            switch (status) {
                 case "deleted" ->
                         result.append(minus)
                                 .append(key)
