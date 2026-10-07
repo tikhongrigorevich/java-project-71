@@ -46,3 +46,6 @@ Difference between two files with Stylish, asciinema:
 
 Difference between two files with Plain, asciinema:
 [![asciicast](https://asciinema.org/a/BELbZcypHr6wCTF8.svg)](https://asciinema.org/a/BELbZcypHr6wCTF8)
+
+Difference between two files with Json, asciinema:
+[![asciicast](https://asciinema.org/a/TA6uCyg87FrHrT8e.svg)](https://asciinema.org/a/TA6uCyg87FrHrT8e)
