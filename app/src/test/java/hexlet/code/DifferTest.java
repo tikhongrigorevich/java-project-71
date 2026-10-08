@@ -19,43 +19,28 @@ class DifferTest {
 
     private static Stream<Arguments> provideDiffTestArgumentsForFiles1And2() {
         return Stream.of(
-                arguments("json", "stylish", "stylish_diff_1_2.txt"),
-                arguments("yml", "stylish", "stylish_diff_1_2.txt"),
-                arguments("json", "plain", "plain_diff_1_2.txt"),
-                arguments("yml", "plain", "plain_diff_1_2.txt"),
-                arguments("json", "json", "json_diff_1_2.txt"),
-                arguments("yml", "json", "json_diff_1_2.txt"));
+                arguments("file1.json", "file2.json", "stylish", "stylish_diff_1_2.txt"),
+                arguments("file1.yml", "file2.yml", "stylish", "stylish_diff_1_2.txt"),
+                arguments("file3.json", "file4.json", "stylish", "stylish_diff_3_4.txt"),
+                arguments("file3.yml", "file4.yml", "stylish", "stylish_diff_3_4.txt"),
+                arguments("file1.json", "file2.json", "plain", "plain_diff_1_2.txt"),
+                arguments("file1.yml", "file2.yml", "plain", "plain_diff_1_2.txt"),
+                arguments("file3.json", "file4.json", "plain", "plain_diff_3_4.txt"),
+                arguments("file3.yml", "file4.yml", "plain", "plain_diff_3_4.txt"),
+                arguments("file1.json", "file2.json", "json", "json_diff_1_2.txt"),
+                arguments("file1.yml", "file2.yml", "json", "json_diff_1_2.txt"),
+                arguments("file3.json", "file4.json", "json", "json_diff_3_4.txt"),
+                arguments("file3.yml", "file4.yml", "json", "json_diff_3_4.txt"));
     }
 
     @ParameterizedTest
     @MethodSource("provideDiffTestArgumentsForFiles1And2")
-    public void diffBetweenFile1And2Test(String extension, String format, String diffResult)
+    public void diffBetweenFile1And2Test(String file1, String file2, String format, String diffResult)
             throws Exception {
-        Path path1 = Path.of("src/test/resources/fixtures/file1." + extension);
-        Path path2 = Path.of("src/test/resources/fixtures/file2." + extension);
+        Path path1 = Path.of("src/test/resources/fixtures/" + file1);
+        Path path2 = Path.of("src/test/resources/fixtures/" + file2);
         String expected = readFixtures(diffResult);
         String actual = Differ.generate(path1, path2, format).trim();
-        assertEquals(expected, actual);
-    }
-
-    private static Stream<Arguments> provideDiffTestArgumentsForFiles3And4() {
-        return Stream.of(
-                arguments("json", "stylish", "stylish_diff_3_4.txt"),
-                arguments("yml", "stylish", "stylish_diff_3_4.txt"),
-                arguments("json", "plain", "plain_diff_3_4.txt"),
-                arguments("yml", "plain", "plain_diff_3_4.txt"),
-                arguments("json", "json", "json_diff_3_4.txt"),
-                arguments("yml", "json", "json_diff_3_4.txt"));
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideDiffTestArgumentsForFiles3And4")
-    public void diffBetweenFile3And4Test(String extension, String format, String diffResult)
-            throws Exception {
-        Path path3 = Path.of("src/test/resources/fixtures/file3." + extension);
-        Path path4 = Path.of("src/test/resources/fixtures/file4." + extension);
-        String expected = readFixtures(diffResult);
-        String actual = Differ.generate(path3, path4, format).trim();
         assertEquals(expected, actual);
     }
 
