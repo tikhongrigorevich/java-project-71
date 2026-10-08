@@ -17,7 +17,7 @@ class DifferTest {
         return Files.readString(Paths.get("src/test/resources/fixtures/", fileName)).trim();
     }
 
-    private static Stream<Arguments> provideDiffTestArgumentsForFiles1And2() {
+    private static Stream<Arguments> provideDiffTestArgumentsForAllFiles() {
         return Stream.of(
                 arguments("file1.json", "file2.json", "stylish", "stylish_diff_1_2.txt"),
                 arguments("file1.yml", "file2.yml", "stylish", "stylish_diff_1_2.txt"),
@@ -34,9 +34,9 @@ class DifferTest {
     }
 
     @ParameterizedTest
-    @MethodSource("provideDiffTestArgumentsForFiles1And2")
-    public void diffBetweenFile1And2Test(String file1, String file2, String format, String diffResult)
-            throws Exception {
+    @MethodSource("provideDiffTestArgumentsForAllFiles")
+    public void diffBetweenFile1And2Test(
+            String file1, String file2, String format, String diffResult) throws Exception {
         Path path1 = Path.of("src/test/resources/fixtures/" + file1);
         Path path2 = Path.of("src/test/resources/fixtures/" + file2);
         String expected = readFixtures(diffResult);
