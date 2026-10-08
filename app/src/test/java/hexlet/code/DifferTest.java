@@ -37,17 +37,17 @@ class DifferTest {
     @MethodSource("provideDiffTestArgumentsForAllFiles")
     public void diffBetweenFile1And2Test(
             String file1, String file2, String format, String diffResult) throws Exception {
-        Path path1 = Path.of("src/test/resources/fixtures/" + file1);
-        Path path2 = Path.of("src/test/resources/fixtures/" + file2);
+        String path1 = "src/test/resources/fixtures/" + file1;
+        String path2 = "src/test/resources/fixtures/" + file2;
         String expected = readFixtures(diffResult);
-        String actual = Differ.generate(path1, path2, format).trim();
+        String actual = Differ.generate(path1, path2, format);
         assertEquals(expected, actual);
     }
 
     @Test
     public void defaultTest() throws Exception {
-        Path path1 = Path.of("src/test/resources/fixtures/file1.json");
-        Path path2 = Path.of("src/test/resources/fixtures/file2.json");
+        String path1 = "src/test/resources/fixtures/file1.json";
+        String path2 = "src/test/resources/fixtures/file2.json";
         String expected =
                 Files.readString(Path.of("src/test/resources/fixtures/stylish_diff_1_2.txt"))
                         .trim();

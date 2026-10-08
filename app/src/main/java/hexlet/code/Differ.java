@@ -2,25 +2,23 @@ package hexlet.code;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class Differ {
-    public static String generate(Path path1, Path path2) throws Exception {
+    public static String generate(String path1, String path2) throws Exception {
         return Differ.generate(path1, path2, "stylish");
     }
 
-    public static String generate(Path filePath1, Path filePath2, String format) throws Exception {
-        Path absolutePath1 = filePath1.toAbsolutePath().normalize();
-        Path absolutePath2 = filePath2.toAbsolutePath().normalize();
+    public static String generate(String filePath1, String filePath2, String format)
+            throws Exception {
+        Path path1 = Paths.get(filePath1).toAbsolutePath().normalize();
+        Path path2 = Paths.get(filePath2).toAbsolutePath().normalize();
 
         Map<String, Object> contentMap1 =
-                Parser.parse(
-                        Files.readString(absolutePath1),
-                        getFormat(absolutePath1.getFileName().toString()));
+                Parser.parse(Files.readString(path1), getFormat(path1.getFileName().toString()));
         Map<String, Object> contentMap2 =
-                Parser.parse(
-                        Files.readString(absolutePath2),
-                        getFormat(absolutePath2.getFileName().toString()));
+                Parser.parse(Files.readString(path2), getFormat(path2.getFileName().toString()));
 
         Set<String> allKeys = new HashSet<>(contentMap1.keySet());
         allKeys.addAll(contentMap2.keySet());
