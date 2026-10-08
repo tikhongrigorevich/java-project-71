@@ -9,22 +9,25 @@ public class Differ {
         return Differ.generate(path1, path2, "stylish");
     }
 
-    public static String generate(Path filePath1, Path filePath2, String format)
-            throws Exception {
-        Path absPath1 = filePath1.toAbsolutePath().normalize();
-        Path absPath2 = filePath2.toAbsolutePath().normalize();
+    public static String generate(Path filePath1, Path filePath2, String format) throws Exception {
+        Path absolutePath1 = filePath1.toAbsolutePath().normalize();
+        Path absolutePath2 = filePath2.toAbsolutePath().normalize();
 
         Map<String, Object> contentMap1 =
-                Parser.parse(Files.readString(absPath1), getFormat(absPath1.getFileName().toString()));
+                Parser.parse(
+                        Files.readString(absolutePath1),
+                        getFormat(absolutePath1.getFileName().toString()));
         Map<String, Object> contentMap2 =
-                Parser.parse(Files.readString(absPath2), getFormat(absPath2.getFileName().toString()));
+                Parser.parse(
+                        Files.readString(absolutePath2),
+                        getFormat(absolutePath2.getFileName().toString()));
 
         Set<String> allKeys = new HashSet<>(contentMap1.keySet());
         allKeys.addAll(contentMap2.keySet());
         List<String> sortedKeys = new ArrayList<>(allKeys);
         Collections.sort(sortedKeys);
 
-        List<Map<String, Object>> diffTree = new ArrayList<>();
+        List<DiffNode> diffTree = new ArrayList<>();
 
         for (var key : sortedKeys) {
             boolean isMap1 = contentMap1.containsKey(key);
@@ -32,28 +35,18 @@ public class Differ {
             Object value1 = contentMap1.get(key);
             Object value2 = contentMap2.get(key);
 
-            Map<String, Object> node = new LinkedHashMap<>();
-            node.put("key", key);
-
             if (isMap1 && !isMap2) {
-                node.put("status", "deleted");
-                node.put("oldValue", value1);
+                diffTree.add(new DiffNode(key, "deleted", value1, null));
             } else if (!isMap1 && isMap2) {
-                node.put("status", "added");
-                node.put("newValue", value2);
+                diffTree.add(new DiffNode(key, "added", null, value2));
             } else if (Objects.equals(value1, value2)) {
-                node.put("status", "notUpdate");
-                node.put("oldValue", value1);
+                diffTree.add(new DiffNode(key, "notUpdate", value1, null));
             } else {
-                node.put("status", "update");
-                node.put("oldValue", value1);
-                node.put("newValue", value2);
+                diffTree.add(new DiffNode(key, "update", value1, value2));
             }
-
-            diffTree.add(node);
         }
 
-        return Formatter.formatter(diffTree, format);
+        return Formatter.render(diffTree, format);
     }
 
     private static String getFormat(String filePath) {

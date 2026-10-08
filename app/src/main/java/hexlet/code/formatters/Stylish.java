@@ -1,52 +1,50 @@
 package hexlet.code.formatters;
 
+import hexlet.code.DiffNode;
 import java.util.List;
-import java.util.Map;
 
 public class Stylish {
-    public static String stylish(List<Map<String, Object>> diffTree) {
+    public static String build(List<DiffNode> diffTree) {
         String minus = "  - ";
         String plus = "  + ";
         String space = "    ";
         String colon = ": ";
-        String oldValue = "oldValue";
-        String newValue = "newValue";
 
         StringBuilder result = new StringBuilder("{\n");
 
         for (var node : diffTree) {
-            String status = (String) node.get("status");
-            String key = (String) node.get("key");
+            String key = node.getKey();
+            String status = node.getStatus();
 
             switch (status) {
                 case "deleted" ->
                         result.append(minus)
                                 .append(key)
                                 .append(colon)
-                                .append(node.get(oldValue))
+                                .append(node.getOldValue())
                                 .append("\n");
                 case "added" ->
                         result.append(plus)
                                 .append(key)
                                 .append(colon)
-                                .append(node.get(newValue))
+                                .append(node.getNewValue())
                                 .append("\n");
                 case "notUpdate" ->
                         result.append(space)
                                 .append(key)
                                 .append(colon)
-                                .append(node.get(oldValue))
+                                .append(node.getOldValue())
                                 .append("\n");
                 case "update" -> {
                     result.append(minus)
                             .append(key)
                             .append(colon)
-                            .append(node.get(oldValue))
+                            .append(node.getOldValue())
                             .append("\n");
                     result.append(plus)
                             .append(key)
                             .append(colon)
-                            .append(node.get(newValue))
+                            .append(node.getNewValue())
                             .append("\n");
                 }
             }

@@ -1,18 +1,19 @@
 package hexlet.code.formatters;
 
+import hexlet.code.DiffNode;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 public class Plain {
-    public static String plain(List<Map<String, Object>> diffTree) {
+    public static String build(List<DiffNode> diffTree) {
         StringBuilder result = new StringBuilder();
 
         for (var node : diffTree) {
-            String status = (String) node.get("status");
-            String key = (String) node.get("key");
-            Object oldValue = node.get("oldValue");
-            Object newValue = node.get("newValue");
+            String key = node.getKey();
+            String status = node.getStatus();
+            Object oldValue = node.getOldValue();
+            Object newValue = node.getNewValue();
             String propertyKey = "Property " + "'" + key + "'";
 
             switch (status) {
