@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -64,7 +63,9 @@ class DifferTest {
     public void defaultTest() throws Exception {
         Path path1 = Path.of("src/test/resources/fixtures/file1.json");
         Path path2 = Path.of("src/test/resources/fixtures/file2.json");
-        String expected = Files.readString(Path.of("src/test/resources/fixtures/stylish_diff_1_2.txt")).trim();
+        String expected =
+                Files.readString(Path.of("src/test/resources/fixtures/stylish_diff_1_2.txt"))
+                        .trim();
         String actual = Differ.generate(path1, path2);
         assertEquals(expected, actual);
     }
