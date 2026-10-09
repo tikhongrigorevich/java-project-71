@@ -4,7 +4,7 @@ import hexlet.code.DiffNode;
 import java.util.List;
 
 public class Stylish {
-    public static String build(List<DiffNode> diffTree) {
+    public static String build(List<DiffNode> diffTree) throws Exception {
         String minus = "  - ";
         String plus = "  + ";
         String space = "    ";
@@ -47,6 +47,7 @@ public class Stylish {
                             .append(node.getNewValue())
                             .append("\n");
                 }
+                default -> throw new Exception("Unknown status: " + status);
             }
         }
 

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Plain {
-    public static String build(List<DiffNode> diffTree) {
+    public static String build(List<DiffNode> diffTree) throws Exception {
         StringBuilder result = new StringBuilder();
 
         for (var node : diffTree) {
@@ -30,6 +30,8 @@ public class Plain {
                                 .append(" to ")
                                 .append(getType(newValue))
                                 .append("\n");
+                case "notUpdate" -> {}
+                default -> throw new Exception("Unknown status: " + status);
             }
         }
 
